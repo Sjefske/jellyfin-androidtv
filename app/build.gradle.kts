@@ -57,13 +57,16 @@ android {
 			isShrinkResources = true
 			proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
 
+			// Fork: use a separate application id so it installs next to the official app
+			applicationIdSuffix = ".fork"
+
 			// Set package names used in various XML files
-			resValue("string", "app_id", namespace!!)
-			resValue("string", "app_search_suggest_authority", "${namespace}.content")
-			resValue("string", "app_search_suggest_intent_data", "content://${namespace}.content/intent")
+			resValue("string", "app_id", "${namespace}.fork")
+			resValue("string", "app_search_suggest_authority", "${namespace}.fork.content")
+			resValue("string", "app_search_suggest_intent_data", "content://${namespace}.fork.content/intent")
 
 			// Set flavored application name
-			resValue("string", "app_name", "@string/app_name_release")
+			resValue("string", "app_name", "@string/app_name_fork")
 
 			buildConfigField("boolean", "DEVELOPMENT", "false")
 

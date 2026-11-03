@@ -32,14 +32,20 @@ The default theme shows a plain black background whenever the focused item has n
 If the server has no splash screen, the app keeps using the theme background.
 
 ### Installing
-There are no store releases of this fork. Every push to `master` is built by GitHub Actions (**Actions → App / Build**,
-artifact `build-artifacts`, download requires a GitHub login). Unzip it and sideload the APK, for example with a file
-manager such as X-plore, with *Downloader*, or with `adb install`.
+Download the latest APK from the **[Releases](../../releases/latest)** page, or use this direct link (handy for the
+*Downloader* app on a TV):
 
-- The build is a debug build named **Jellyfin Debug** (`org.jellyfin.androidtv.debug`), so it installs next to the
-  official app instead of replacing it.
-- Each build is signed with a different temporary key, so uninstall the previous version before installing a new one.
-  Your library display settings are stored on the Jellyfin server and are kept.
+```
+https://github.com/Sjefske/jellyfin-androidtv/releases/latest/download/jellyfin-androidtv-fork.apk
+```
+
+- The app is called **Jellyfin Fork** (`org.jellyfin.androidtv.fork`) and installs next to the official app instead of
+  replacing it.
+- New releases install over the previous version; your login and settings are kept.
+- On Google TV you may need to enable developer mode first and allow the app you open the APK with to install apps.
+
+Every push to `master` is also built by GitHub Actions as a debug build (**Actions → App / Build**, requires a GitHub
+login). Those builds are called **Jellyfin Debug** and are signed with a temporary key.
 
 ---
 
