@@ -20,4 +20,9 @@ enum class ImageType(
 	 * Banner.
 	 */
 	BANNER(R.string.image_type_banner),
+
+	/**
+	 * Text list with one item per row and a small thumbnail.
+	 */
+	LIST(R.string.image_type_list),
 }

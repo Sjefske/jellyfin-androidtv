@@ -278,6 +278,7 @@
     <string name="image_size_medium">Gemiddeld</string>
     <string name="image_size_small">Klein</string>
     <string name="image_type_banner">Banner</string>
+    <string name="image_type_list">Lijst</string>
     <string name="image_type_thumbnail">Miniatuur</string>
     <string name="enable_smart_view_description">Smart screen toont relevante items in plaats van een raster</string>
     <string name="enable_smart_view">Smart screen inschakelen</string>

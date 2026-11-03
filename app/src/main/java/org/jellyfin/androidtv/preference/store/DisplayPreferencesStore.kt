@@ -115,6 +115,12 @@ abstract class DisplayPreferencesStore(
 		cachedPreferences[key] = value
 	}
 
+	/**
+	 * Whether a value is stored for [preference], instead of falling back to its default value.
+	 */
+	fun <T : Any> contains(preference: Preference<T>): Boolean =
+		!cachedPreferences[preference.key].isNullOrBlank()
+
 	override fun <T : Any> delete(preference: Preference<T>) {
 		cachedPreferences.remove(preference.key)
 	}
