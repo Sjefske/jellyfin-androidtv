@@ -1,3 +1,36 @@
+> [!NOTE]
+> **This is an unofficial fork** of [jellyfin/jellyfin-androidtv](https://github.com/jellyfin/jellyfin-androidtv).
+> It is not affiliated with or supported by the Jellyfin project. For the official app, use the store links further down.
+
+## What is different in this fork: list view for libraries
+
+The official Android TV app only shows libraries as a wall of posters, thumbnails or banners. That makes it hard to scroll
+through and find things in libraries with many files that have no proper artwork, such as music videos, concert
+recordings or home videos.
+
+This fork adds a **List** option next to Poster, Thumbnail and Banner:
+
+- One full-width row per item with a small 16:9 thumbnail, the name, the runtime, a watched mark and a progress bar.
+- Folders show how many items are still unwatched.
+- The existing **Image size** setting controls the row height, from compact to large.
+- Sub folders opened from a list open as a list as well, unless they have their own setting.
+- Sorting by name and the jump-to-letter button work as usual.
+
+Turn it on per library: open the library, press the **settings** (gear) button in the toolbar and choose
+**Image type → List**.
+
+### Installing
+There are no store releases of this fork. Every push to `master` is built by GitHub Actions (**Actions → App / Build**,
+artifact `build-artifacts`, download requires a GitHub login). Unzip it and sideload the APK, for example with a file
+manager such as X-plore, with *Downloader*, or with `adb install`.
+
+- The build is a debug build named **Jellyfin Debug** (`org.jellyfin.androidtv.debug`), so it installs next to the
+  official app instead of replacing it.
+- Each build is signed with a different temporary key, so uninstall the previous version before installing a new one.
+  Your library display settings are stored on the Jellyfin server and are kept.
+
+---
+
 <h1 align="center">Jellyfin for Android TV</h1>
 <h3 align="center">Part of the <a href="https://jellyfin.org">Jellyfin Project</a></h3>
 
