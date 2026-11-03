@@ -279,6 +279,10 @@
     <string name="image_size_small">Klein</string>
     <string name="image_type_banner">Banner</string>
     <string name="image_type_list">Lijst</string>
+    <string name="pref_default_background">Standaardachtergrond</string>
+    <string name="pref_default_background_description">Wordt getoond als een item geen eigen achtergrond heeft. Upload op de Jellyfin-server een splashscreen onder Dashboard → Branding om je eigen afbeelding te gebruiken.</string>
+    <string name="default_background_theme">Thema</string>
+    <string name="default_background_server_splashscreen">Splashscreen van de server</string>
     <string name="image_type_thumbnail">Miniatuur</string>
     <string name="enable_smart_view_description">Smart screen toont relevante items in plaats van een raster</string>
     <string name="enable_smart_view">Smart screen inschakelen</string>

@@ -7,6 +7,7 @@ import org.jellyfin.androidtv.preference.constant.AVCLevel
 import org.jellyfin.androidtv.preference.constant.AppTheme
 import org.jellyfin.androidtv.preference.constant.AudioBehavior
 import org.jellyfin.androidtv.preference.constant.BackdropBehavior
+import org.jellyfin.androidtv.preference.constant.DefaultBackground
 import org.jellyfin.androidtv.preference.constant.BitstreamAudioMode
 import org.jellyfin.androidtv.preference.constant.BufferLength
 import org.jellyfin.androidtv.preference.constant.ClockBehavior
@@ -49,6 +50,11 @@ class UserPreferences(context: Context) : SharedPreferenceStore(
 		 * Behavior of app background while browsing
 		 */
 		var backdropBehavior = enumPreference("backdrop_behavior", BackdropBehavior.BACKDROP_WITH_BLUR)
+
+		/**
+		 * Background to show when the focused item has no backdrop
+		 */
+		var defaultBackground = enumPreference("default_background", DefaultBackground.THEME)
 
 		/* Playback - General*/
 		/**

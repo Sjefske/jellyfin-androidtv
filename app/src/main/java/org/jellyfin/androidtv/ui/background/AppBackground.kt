@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -33,6 +34,22 @@ import org.koin.compose.koinInject
 
 @Composable
 private fun AppThemeBackground() {
+	val backgroundService = koinInject<BackgroundService>()
+	val defaultBackground by backgroundService.defaultBackground.collectAsState()
+
+	LaunchedEffect(Unit) { backgroundService.refreshDefaultBackground() }
+
+	defaultBackground?.let { image ->
+		Image(
+			bitmap = image,
+			contentDescription = null,
+			alignment = Alignment.Center,
+			contentScale = ContentScale.Crop,
+			modifier = Modifier.fillMaxSize()
+		)
+		return
+	}
+
 	val context = LocalContext.current
 	val themeBackground = remember(context.theme) {
 		val attributes = context.theme.obtainStyledAttributes(intArrayOf(R.attr.defaultBackground))

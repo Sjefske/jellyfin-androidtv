@@ -2,7 +2,9 @@
 > **This is an unofficial fork** of [jellyfin/jellyfin-androidtv](https://github.com/jellyfin/jellyfin-androidtv).
 > It is not affiliated with or supported by the Jellyfin project. For the official app, use the store links further down.
 
-## What is different in this fork: list view for libraries
+## What is different in this fork
+
+### List view for libraries
 
 The official Android TV app only shows libraries as a wall of posters, thumbnails or banners. That makes it hard to scroll
 through and find things in libraries with many files that have no proper artwork, such as music videos, concert
@@ -18,6 +20,16 @@ This fork adds a **List** option next to Poster, Thumbnail and Banner:
 
 Turn it on per library: open the library, press the **settings** (gear) button in the toolbar and choose
 **Image type → List**.
+
+### Your own default background
+
+The default theme shows a plain black background whenever the focused item has no backdrop. This fork adds a
+**Default background** setting so you can show your own image instead:
+
+1. On the Jellyfin server, open **Dashboard → Branding**, enable the splash screen and upload your image.
+2. In the app, open **Settings → Customization → Default background** and choose **Server splash screen**.
+
+If the server has no splash screen, the app keeps using the theme background.
 
 ### Installing
 There are no store releases of this fork. Every push to `master` is built by GitHub Actions (**Actions → App / Build**,

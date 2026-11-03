@@ -86,6 +86,17 @@ fun SettingsCustomizationScreen() {
 		}
 
 		item {
+			var defaultBackground by rememberPreference(userPreferences, UserPreferences.defaultBackground)
+
+			ListButton(
+				headingContent = { Text(stringResource(R.string.pref_default_background)) },
+				captionContent = { Text(stringResource(defaultBackground.nameRes)) },
+				onClick = { router.push(Routes.CUSTOMIZATION_DEFAULT_BACKGROUND) },
+				modifier = Modifier.focusKey(Routes.CUSTOMIZATION_DEFAULT_BACKGROUND)
+			)
+		}
+
+		item {
 			var seriesThumbnailsEnabled by rememberPreference(userPreferences, UserPreferences.seriesThumbnailsEnabled)
 
 			ListButton(

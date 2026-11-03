@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import org.jellyfin.androidtv.auth.model.Server
 import org.jellyfin.androidtv.preference.UserPreferences
 import org.jellyfin.androidtv.preference.constant.BackdropBehavior
+import org.jellyfin.androidtv.preference.constant.DefaultBackground
 import org.jellyfin.androidtv.util.apiclient.getUrl
 import org.jellyfin.androidtv.util.apiclient.itemBackdropImages
 import org.jellyfin.androidtv.util.apiclient.parentBackdropImages
@@ -52,7 +53,11 @@ class BackgroundService(
 	private var _currentBackground = MutableStateFlow<ImageBitmap?>(null)
 	private var _blurBackground = MutableStateFlow(false)
 	private var _enabled = MutableStateFlow(true)
+	private var _defaultBackground = MutableStateFlow<ImageBitmap?>(null)
+	private var defaultBackgroundUrl: String? = null
+	private var loadDefaultBackgroundJob: Job? = null
 	val currentBackground get() = _currentBackground.asStateFlow()
+	val defaultBackground get() = _defaultBackground.asStateFlow()
 	val blurBackground get() = _blurBackground.asStateFlow()
 	val enabled get() = _enabled.asStateFlow()
 
@@ -97,6 +102,33 @@ class BackgroundService(
 		val splashscreenUrl = api.imageApi.getSplashscreenUrl()
 
 		loadBackgrounds(setOf(splashscreenUrl))
+	}
+
+	/**
+	 * Load the background shown when there is no item backdrop, based on the user preference. Cheap to call
+	 * repeatedly: the image is only loaded again when the source changes.
+	 */
+	fun refreshDefaultBackground() {
+		val url = when (userPreferences[UserPreferences.defaultBackground]) {
+			DefaultBackground.THEME -> null
+			DefaultBackground.SERVER_SPLASHSCREEN -> api.baseUrl?.let { api.imageApi.getSplashscreenUrl() }
+		}
+
+		if (url == defaultBackgroundUrl) return
+		defaultBackgroundUrl = url
+
+		loadDefaultBackgroundJob?.cancel()
+		if (url == null) {
+			_defaultBackground.value = null
+			return
+		}
+
+		loadDefaultBackgroundJob = scope.launch(Dispatchers.IO) {
+			// Falls back to the theme background when the server has no splash screen (request fails)
+			_defaultBackground.value = imageLoader.execute(
+				request = ImageRequest.Builder(context).data(url).build()
+			).image?.toBitmap()?.asImageBitmap()
+		}
 	}
 
 	private fun loadBackgrounds(backdropUrls: Set<String>) {
