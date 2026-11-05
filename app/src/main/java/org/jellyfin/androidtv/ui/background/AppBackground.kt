@@ -1,5 +1,6 @@
 package org.jellyfin.androidtv.ui.background
 
+import org.jellyfin.androidtv.auth.repository.SessionRepository
 import android.graphics.drawable.ColorDrawable
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.snap
@@ -37,7 +38,11 @@ private fun AppThemeBackground() {
 	val backgroundService = koinInject<BackgroundService>()
 	val defaultBackground by backgroundService.defaultBackground.collectAsState()
 
-	LaunchedEffect(Unit) { backgroundService.refreshDefaultBackground() }
+	// The splash screen comes from the server of the current session, so reload when the session changes
+	// (on app start the session is restored after the background is first shown)
+	val sessionRepository = koinInject<SessionRepository>()
+	val session by sessionRepository.currentSession.collectAsState()
+	LaunchedEffect(session?.serverId, session?.userId) { backgroundService.refreshDefaultBackground() }
 
 	defaultBackground?.let { image ->
 		Image(
