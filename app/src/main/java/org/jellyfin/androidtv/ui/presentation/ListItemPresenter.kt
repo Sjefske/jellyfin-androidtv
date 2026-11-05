@@ -2,7 +2,6 @@ package org.jellyfin.androidtv.ui.presentation
 
 import android.view.KeyEvent
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -24,6 +23,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.leanback.widget.Presenter
 import androidx.lifecycle.findViewTreeLifecycleOwner
+import coil3.compose.AsyncImage
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.savedstate.findViewTreeSavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
@@ -43,7 +45,6 @@ import org.jellyfin.androidtv.R
 import org.jellyfin.androidtv.constant.ImageType
 import org.jellyfin.androidtv.ui.base.Icon
 import org.jellyfin.androidtv.ui.base.Text
-import org.jellyfin.androidtv.ui.composable.AsyncImage
 import org.jellyfin.androidtv.ui.itemhandling.BaseRowItem
 import org.jellyfin.androidtv.util.apiclient.getUrl
 import org.jellyfin.androidtv.util.getActivity
@@ -178,19 +179,20 @@ private fun ListItemContent(
 			modifier = Modifier
 				.width(thumbWidth)
 				.fillMaxHeight()
+				.clipToBounds()
 				.background(Tokens.Color.colorBluegrey800)
 		) {
 			if (image != null) {
 				val api = koinInject<ApiClient>()
+				// Coil's AsyncImage always fills the box and crops to 16:9, whatever the source aspect ratio
 				AsyncImage(
-					url = image.getUrl(
+					model = image.getUrl(
 						api,
 						maxWidth = with(density) { thumbWidth.roundToPx() },
 						maxHeight = with(density) { height.roundToPx() },
 					),
-					blurHash = image.blurHash,
-					aspectRatio = THUMB_ASPECT_RATIO,
-					scaleType = ImageView.ScaleType.CENTER_CROP,
+					contentDescription = null,
+					contentScale = ContentScale.Crop,
 					modifier = Modifier.fillMaxSize(),
 				)
 			} else {
