@@ -12,7 +12,8 @@ recordings or home videos.
 
 This fork adds a **List** option next to Poster, Thumbnail and Banner:
 
-- One full-width row per item with a small 16:9 thumbnail, the name, the runtime, a watched mark and a progress bar.
+- One full-width row per item with a small 16:9 thumbnail, the name, the runtime, the file size, a watched mark and a
+  progress bar.
 - Folders show how many items are still unwatched.
 - The existing **Image size** setting controls the row height, from compact to large.
 - Sub folders opened from a list open as a list as well, unless they have their own setting.
