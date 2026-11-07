@@ -1,12 +1,13 @@
 name: Fork / Release
 
 # Builds a signed release APK and attaches it to a GitHub release.
-# Create a release with a tag like v1.0.0 on GitHub and this workflow does the rest.
+# Either create a release with a new tag like v1.0.1 on GitHub, or push an annotated tag: the workflow creates the
+# release (with the tag message as notes) when it doesn't exist yet and uploads the APK.
 
 on:
-  release:
-    types:
-      - published
+  push:
+    tags:
+      - v*
 
 jobs:
   release:
@@ -47,4 +48,7 @@ jobs:
         run: |
           apk=$(ls app/build/outputs/apk/release/jellyfin-androidtv-*-release.apk)
           cp "$apk" jellyfin-androidtv-fork.apk
+          if ! gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-from-tag --verify-tag
+          fi
           gh release upload "$GITHUB_REF_NAME" "$apk" jellyfin-androidtv-fork.apk --clobber
